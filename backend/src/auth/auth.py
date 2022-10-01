@@ -2,14 +2,14 @@ from ast import Try
 import json
 from flask import request, _request_ctx_stack
 from functools import wraps
-from flask_restful import abort
+from flask import abort
 from jose import jwt
 from urllib.request import urlopen
 
 
-AUTH0_DOMAIN = 'udacity-fsnd.auth0.com'
+AUTH0_DOMAIN = 'dev-alx.us.auth0.com'
 ALGORITHMS = ['RS256']
-API_AUDIENCE = 'dev'
+API_AUDIENCE = 'https://alx_coffee_shop_api/'
 
 ## AuthError Exception
 '''
