@@ -1,4 +1,5 @@
 import os
+import re
 from turtle import title
 from flask import Flask, request, jsonify, abort
 from sqlalchemy import exc
@@ -102,15 +103,15 @@ def create_drinks():
     if(requires_auth('post:drinks')):
         body = request.get_json()
 
-        new_title = body.get("title", None)
-        new_recipe = body.get("recipe", None)
+        new_title = body.get('title', None)
+        new_recipe = json.dumps(body.get('recipe'))
 
         if new_title is None:
             abort(400)
 
         try:
             
-            drink = Drink(title=new_title, recipe=new_recipe)
+            drink = Drink(title=new_title, recipe= new_recipe) 
             drink.insert()
             drinks_long = drink.long()
             drinks = [drinks_long]
@@ -122,7 +123,7 @@ def create_drinks():
                 }
             )
 
-        except:
+        except :
             abort(422)
     else:
         abort(401)
@@ -151,7 +152,7 @@ def udate_drink(drink_id):
                 if 'title' in body:
                     drink.title = body.get('title')
                 if 'recipe' in body:
-                    drink.recipe = body.get('recipe')
+                    drink.recipe =  json.dumps(body.get('recipe'))
 
                 drink.update()
                 drinks_long = drink.long()
